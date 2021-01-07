@@ -10,6 +10,7 @@ public class SceneLoader : MonoBehaviour
 
     private void Awake()
     {
+    /*
         if (FindObjectsOfType(GetType()).Length > 1)
         {
             Destroy(gameObject);
@@ -18,6 +19,7 @@ public class SceneLoader : MonoBehaviour
         {
             DontDestroyOnLoad(gameObject);
         }
+        */
     }
 
     private void Start()
@@ -39,8 +41,13 @@ public class SceneLoader : MonoBehaviour
         SceneManager.LoadScene("Start Scene");
     }
 
-    private void LoadNextScene()
+    public void LoadNextScene()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+    }
+
+    public void QuitGame()
+    {
+        Application.Quit();
     }
 }

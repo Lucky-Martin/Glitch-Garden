@@ -7,7 +7,8 @@ public class Entity : MonoBehaviour
 {
     public int health = 100;
     public int damage = 15;
-
+    public GameObject deathVFX;
+    
     private bool isBodyColliding = false;
     private float currentSpeed = 0.3f;
     private float prefferedSpeed;
@@ -17,8 +18,9 @@ public class Entity : MonoBehaviour
         health -= damageToGive;
         if (health <= 0)
         {
+            GameObject vfx = Instantiate(deathVFX, transform.position, transform.rotation);
+            Destroy(vfx, 2f);
             Destroy(gameObject);
-            Debug.Log("Entity is dead!");
         }
     }
     
@@ -36,6 +38,7 @@ public class Entity : MonoBehaviour
     {
         GameObject shotProjectile = Instantiate(projectile, transform.position, Quaternion.identity);
         shotProjectile.GetComponent<Projectile>().Shoot();
+        Debug.Log(shotProjectile);
     }
     
     // Update is called once per frame
@@ -64,8 +67,10 @@ public class Entity : MonoBehaviour
     
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Defender"))
+        //Check if this instance "Attacker" collides with "Defender"
+        if (other.CompareTag("Defender") && CompareTag("Attacker"))
         {
+            Debug.Log("Entity hit");
             SetMovementSpeed(0f);
             isBodyColliding = true; 
             StartCoroutine(HitDefender(other.GetComponent<Entity>()));

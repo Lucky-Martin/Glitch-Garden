@@ -30,10 +30,11 @@ public class Projectile : MonoBehaviour
         Entity entity = other.GetComponent<Entity>();
         if (entity && other.CompareTag("Attacker"))
         {
+            Debug.Log("Destroy them");
             //Deal damage if so
             entity.DealDamage(damage);
+            //Destroy the projectile
+            Destroy(gameObject);
         }
-        //Destroy the projectile
-        Destroy(gameObject);
     }
 }

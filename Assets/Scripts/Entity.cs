@@ -7,6 +7,7 @@ public class Entity : MonoBehaviour
 {
     public int health = 100;
     public int damage = 15;
+    public Vector2 offset;
     public GameObject deathVFX;
     
     private bool isBodyColliding = false;

@@ -119,6 +119,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 100
   damage: 15
+  offset: {x: 0, y: 0.2}
   deathVFX: {fileID: 6804183549944037521, guid: 85f5fcb1cc2a2684596035ff1dfe0c6e,
     type: 3}
 --- !u!61 &7516755382874123185

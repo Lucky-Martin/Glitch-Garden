@@ -10,9 +10,9 @@ public class Entity : MonoBehaviour
     public Vector2 offset;
     public GameObject deathVFX;
     
-    private bool isBodyColliding = false;
-    private float currentSpeed = 0.3f;
-    private float prefferedSpeed;
+    private bool _isBodyColliding = false;
+    private float _currentSpeed = 0.3f;
+    private float _prefferedSpeed;
 
     public void DealDamage(int damageToGive)
     {
@@ -21,18 +21,19 @@ public class Entity : MonoBehaviour
         {
             GameObject vfx = Instantiate(deathVFX, transform.position, transform.rotation);
             Destroy(vfx, 2f);
+            
             Destroy(gameObject);
         }
     }
     
     public void SetMovementSpeed(float speed)
     {
-        if (isBodyColliding)
+        if (_isBodyColliding)
         {
             return;
         }
-        currentSpeed = speed;
-        prefferedSpeed = currentSpeed;
+        _currentSpeed = speed;
+        _prefferedSpeed = _currentSpeed;
     }
 
     public void ShootProjectile(GameObject projectile)
@@ -47,9 +48,9 @@ public class Entity : MonoBehaviour
     {
         if (CompareTag("Attacker"))
         {
-            if (currentSpeed > 0f)
+            if (_currentSpeed > 0f)
             {
-                transform.Translate(Vector2.left * currentSpeed * Time.deltaTime);
+                transform.Translate(Vector2.left * _currentSpeed * Time.deltaTime);
             }
         }
     }
@@ -59,11 +60,14 @@ public class Entity : MonoBehaviour
         while (defender.health > 0)
         {
             yield return new WaitForSeconds(1);
-            defender.DealDamage(damage);
+            if (gameObject)
+            {
+                defender.DealDamage(damage);
+            }
         }
 
-        isBodyColliding = false;
-        SetMovementSpeed(prefferedSpeed);   
+        _isBodyColliding = false;
+        SetMovementSpeed(_prefferedSpeed);   
     }
     
     private void OnTriggerEnter2D(Collider2D other)
@@ -73,7 +77,7 @@ public class Entity : MonoBehaviour
         {
             Debug.Log("Entity hit");
             SetMovementSpeed(0f);
-            isBodyColliding = true; 
+            _isBodyColliding = true; 
             StartCoroutine(HitDefender(other.GetComponent<Entity>()));
         }
     }

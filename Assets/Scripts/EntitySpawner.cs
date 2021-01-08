@@ -25,7 +25,8 @@ public class EntitySpawner : MonoBehaviour
         while (shouldSpawn)
         {
             yield return new WaitForSeconds(Random.Range(minSpawnTime, maxSpawnTime + 1));
-            Instantiate(entity, transform.position, Quaternion.identity);
+            GameObject newEntity = Instantiate(entity, transform.position, Quaternion.identity);
+            newEntity.transform.parent = transform;
         }
     }
 }
